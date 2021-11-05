@@ -33,7 +33,7 @@ const Home = (props) => {
         <h1>
           {project ? project.name : "Home"} Page
         </h1>
-        <p>{project.content ? project.content : "no content"}</p>
+        {/* <p>{project.content ? project.content : "no content"}</p> */}
       </main>
 
       <footer>

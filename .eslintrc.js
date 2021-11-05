@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ["blitz","next/babel"],
+  extends: ["blitz", "prettier"],
 }
