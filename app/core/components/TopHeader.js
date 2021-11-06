@@ -18,11 +18,10 @@ const UserInfo = () => {
           onClick={async () => {
             await logoutMutation()
           }}
-          style={{float: "left"}}
         >
           Logout
         </button>
-        <div style={{float: "right"}}>
+        <div>
           Name: <code>{currentUser.name}</code>
           <br />
           Role: <code>{currentUser.role}</code>
@@ -56,11 +55,11 @@ export default function TopHeader(props) {
     <div className="top-header" style={{width: "100%", padding: "10px", background: "#577ae3", color: "#FFF"}}>
       {/* <h1 style={{ float: "left" }}>{props.name}</h1> */}
       <h1 style={{float: "left"}}>Testies</h1>
-      <div style={{float: "right"}}>
+      <div id="menu-container">
         <Suspense fallback="Loading...">
           <UserInfo />
         </Suspense>
-        <ul style={{ float: "right" }}>
+        <ul>
           {props.links.map((link, i) => (
             <li key={i}>
               <Link href={`/${link.slug}`}>{link.name}</Link>
@@ -68,6 +67,27 @@ export default function TopHeader(props) {
           ))}
         </ul>
       </div>
+      <style jsx global>{`
+        #menu-container ul a {
+          color: #FFF;
+        }
+        #menu-container ul {
+           list-style: none;
+           padding: 0;
+        }
+        #menu-container {
+            width: 30%;
+            position: absolute;
+            height: 100vh;
+            background: #577ae3;
+            top: 0;
+            right: 0;
+            border: 1px solid black;
+            padding: 50px 10px;
+            display: flex;
+            flex-direction: column;
+        }
+      `}</style>
     </div>
   )
 }
