@@ -54,7 +54,7 @@ export default function TopHeader(props) {
   return (
     <div className="top-header" style={{width: "100%", padding: "10px", background: "#577ae3", color: "#FFF"}}>
       {/* <h1 style={{ float: "left" }}>{props.name}</h1> */}
-      <h1 style={{float: "left"}}>Testies</h1>
+      <h1 style={{float: "left"}}>CMS?</h1>
       <div id="menu-container">
         <Suspense fallback="Loading...">
           <UserInfo />

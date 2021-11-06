@@ -57,8 +57,8 @@ CREATE TABLE "Section" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
-    "link" TEXT NOT NULL,
-    "content" TEXT NOT NULL,
+    "link" TEXT NOT NULL DEFAULT E'',
+    "content" TEXT NOT NULL DEFAULT E'',
 
     CONSTRAINT "Section_pkey" PRIMARY KEY ("id")
 );
