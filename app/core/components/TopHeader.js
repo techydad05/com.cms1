@@ -23,13 +23,12 @@ const UserInfo = () => {
           Logout
         </button>
         <div style={{float: "right"}}>
-          User id: <code>{currentUser.id}</code>
+          Name: <code>{currentUser.name}</code>
           <br />
-          User name: <code>{currentUser.name}</code>
+          Role: <code>{currentUser.role}</code>
           <br />
-          User role: <code>{currentUser.role}</code>
-          <br />
-          <Link href="/projects"><p style={{color: "#FFF", margin: "0", textAlign: "left", textDecoration: "underline", cursor: "pointer"}}>Pages</p></Link>
+          <Link href="/sections"><p style={{color: "#FFF", margin: "0", textAlign: "left", textDecoration: "underline", cursor: "pointer"}}>Sections</p></Link>
+          <Link href="/projects"><p style={{color: "#FFF", margin: "0", textAlign: "left", textDecoration: "underline", cursor: "pointer"}}>Projects</p></Link>
         </div>
       </>
     )
@@ -52,21 +51,22 @@ const UserInfo = () => {
 }
 
 export default function TopHeader(props) {
+  console.log("props", props)
   return (
-    <div className="top-header" style={{width: "100%", height: "100px", padding: "10px", background: "#577ae3", color: "#FFF"}}>
+    <div className="top-header" style={{width: "100%", padding: "10px", background: "#577ae3", color: "#FFF"}}>
       {/* <h1 style={{ float: "left" }}>{props.name}</h1> */}
       <h1 style={{float: "left"}}>Testies</h1>
       <div style={{float: "right"}}>
         <Suspense fallback="Loading...">
           <UserInfo />
         </Suspense>
-        {/* <ul style={{ float: "right" }}>
+        <ul style={{ float: "right" }}>
           {props.links.map((link, i) => (
             <li key={i}>
-              <Link href={`/${link.name}`}>{link.name}</Link>
+              <Link href={`/${link.slug}`}>{link.name}</Link>
             </li>
           ))}
-        </ul> */}
+        </ul>
       </div>
     </div>
   )

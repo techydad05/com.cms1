@@ -5,6 +5,8 @@ export function SectionForm(props) {
   return (
     <Form {...props}>
       <LabeledTextField name="name" label="Name" placeholder="Name" />
+      <LabeledTextField name="link" label="Link" placeholder="Link" />
+      <LabeledTextField name="content" label="Content" placeholder="Content" />
     </Form>
   )
 }

@@ -7,33 +7,45 @@ import db from "db"
 
 // This gets called on every request
 export async function getServerSideProps() {
-  const projects = await db.project.findMany()
+  const sections = await db.section.findMany()
+  console.log(sections)
   // Pass projects to the page via props
-  return { props: { projects } }
+  return { props: { sections } }
 }
 
 
 const Home = (props) => {
   const params = useParams()
   const route = params.slug || ["home"]
-  const projects = props.projects
-  const links = projects.map((project) => {
-    return { name: project.name }
+  const sections = props.sections
+  const links = sections.map((section) => {
+    return { name: section.name, slug: section.link }
   })
-  const project = projects.find((p) => p.name === route[0])
-  console.log("links:", links)
-  console.log("project:", project)
+  const section = sections.find((s) => s.link === route[0])
+
+  //TODO: *** work on fixing for nested routes
+
+
   return (
     <div className="container">
-      <TopHeader />
+      <TopHeader links={links} />
       <main>
-        <div className="logo">
+        <Suspense fallback={<div>Loading...</div>}>
+        {(section && (
+          <div>
+            <div id="content">
+              {section.content || <p>default content</p>}
+            </div>
+          </div>
+        )) || (
+          <div id="404">
+            <p><strong>404</strong> | you have tried to view a page that does not exist</p>
+          </div>
+        )}
+        </Suspense>
+        {/* <div className="logo">
           <Image src={logo} alt="blitzjs" />
-        </div>
-        <h1>
-          {project ? project.name : "Home"} Page
-        </h1>
-        {/* <p>{project.content ? project.content : "no content"}</p> */}
+        </div> */}
       </main>
 
       <footer>

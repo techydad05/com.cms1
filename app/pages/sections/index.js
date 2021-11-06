@@ -60,7 +60,7 @@ const SectionsPage = () => {
       <Head>
         <title>Sections</title>
       </Head>
-
+      <Link href="/">Home</Link>
       <div>
         <p>
           <Link href={Routes.NewSectionPage()}>
