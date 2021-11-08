@@ -1,16 +1,26 @@
 import { Suspense } from "react"
-import { Image, Link, useMutation, Routes, useParams } from "blitz"
+import { Image, Link, useMutation, Routes, useParams, useQuery } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import logo from "public/logo.png"
 import TopHeader from "app/core/components/TopHeader"
 import db from "db"
+import getProject from "app/projects/queries/getProject"
 
 // This gets called on every request
 export async function getServerSideProps() {
   const sections = await db.section.findMany()
-  console.log(sections)
+  // console.log(sections)
   // Pass projects to the page via props
   return { props: { sections } }
+}
+
+function Project() {
+  // const project = getProject({id: 1})
+  // console.log("project:", project)
+  const [project] = useQuery(getProject, { id: 1 })
+  return <>
+    <h1>{project.name}</h1>
+  </>
 }
 
 
@@ -18,12 +28,12 @@ const Home = (props) => {
   const params = useParams()
   const route = params.slug || ["home"]
   const sections = props.sections
+  //TODO: *** work on fixing for nested routes
   const links = sections.map((section) => {
     return { name: section.name, slug: section.link }
   })
   const section = sections.find((s) => s.link === route[0])
 
-  //TODO: *** work on fixing for nested routes
 
 
   return (
@@ -31,10 +41,11 @@ const Home = (props) => {
       <TopHeader links={links} />
       <main>
         <Suspense fallback={<div>Loading...</div>}>
+        <Project />
         {(section && (
           <div>
             <div id="content">
-              {section.content || <p>default content</p>}
+                {section.content || <p>default content</p>}
             </div>
           </div>
         )) || (
