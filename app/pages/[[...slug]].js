@@ -17,7 +17,9 @@ export async function getServerSideProps() {
 function Project() {
   // const project = getProject({id: 1})
   // console.log("project:", project)
-  const [project] = useQuery(getProject, { id: 1 })
+  const [project, {refetch}] = useQuery(getProject, { id: 1 })
+  console.log("project:", JSON.stringify(project, null, 2))
+  console.log("refetch:", refetch)
   return <>
     <h1>{project.name}</h1>
   </>
