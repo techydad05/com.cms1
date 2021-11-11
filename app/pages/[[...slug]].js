@@ -1,12 +1,14 @@
 import { Suspense } from "react"
 import { Image, Link, useMutation, Routes, useParams, useQuery } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import logo from "public/logo.png"
 import TopHeader from "app/core/components/TopHeader"
 import db from "db"
 import getProject from "app/projects/queries/getProject"
+import getSection from "app/sections/queries/getSection"
+import PrintMarkdown from "app/core/components/PrintMarkdown"
 
 // This gets called on every request
+// might be able to remove this
 export async function getServerSideProps() {
   const sections = await db.section.findMany()
   // console.log(sections)
@@ -14,23 +16,30 @@ export async function getServerSideProps() {
   return { props: { sections } }
 }
 
-function Project() {
-  // const project = getProject({id: 1})
-  // console.log("project:", project)
-  const [project, {refetch}] = useQuery(getProject, { id: 1 })
-  console.log("project:", JSON.stringify(project, null, 2))
-  console.log("refetch:", refetch)
+// working on having updating data for best user experience
+// function Project() {
+//   // const [project, {refetch}] = useQuery(getProject, { id: 1 }, {refetchInterval:1000})
+//   const [project, {refetch}] = useQuery(getProject, { id: 1 })
+//   return <>
+//     <h1>{project.name}</h1>
+//   </>
+// }
+
+function Section() {
+  const params = useParams()
+  const route = params.slug || ["home"]
+  const [section, {refetch}] = useQuery(getSection, { link: route[0] })
   return <>
-    <h1>{project.name}</h1>
+    <PrintMarkdown markdown={section.content} />
   </>
 }
-
 
 const Home = (props) => {
   const params = useParams()
   const route = params.slug || ["home"]
   const sections = props.sections
   //TODO: *** work on fixing for nested routes
+  // and changing location of this function to topheader
   const links = sections.map((section) => {
     return { name: section.name, slug: section.link }
   })
@@ -43,22 +52,9 @@ const Home = (props) => {
       <TopHeader links={links} />
       <main>
         <Suspense fallback={<div>Loading...</div>}>
-        <Project />
-        {(section && (
-          <div>
-            <div id="content">
-                {section.content || <p>default content</p>}
-            </div>
-          </div>
-        )) || (
-          <div id="404">
-            <p><strong>404</strong> | you have tried to view a page that does not exist</p>
-          </div>
-        )}
+          {/* <Project /> */}
+          <Section />
         </Suspense>
-        {/* <div className="logo">
-          <Image src={logo} alt="blitzjs" />
-        </div> */}
       </main>
 
       <footer>
@@ -88,20 +84,20 @@ const Home = (props) => {
           box-sizing: border-box;
         }
         .container {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
+         // min-height: 100vh;
+         // display: flex;
+         // flex-direction: column;
+         // justify-content: center;
+         // align-items: center;
         }
 
         main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
+         // padding: 5rem 0;
+         // flex: 1;
+         // display: flex;
+         // flex-direction: column;
+         // justify-content: center;
+         // align-items: center;
         }
 
         main p {

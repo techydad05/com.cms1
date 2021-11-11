@@ -4,7 +4,35 @@ import Layout from "app/core/layouts/Layout"
 import getSection from "app/sections/queries/getSection"
 import updateSection from "app/sections/mutations/updateSection"
 import { SectionForm, FORM_ERROR } from "app/sections/components/SectionForm"
+import MarkdownIt from 'markdown-it'
+import MdEditor from 'react-markdown-editor-lite'
+// import style manually
+import 'react-markdown-editor-lite/lib/index.css'
+import { useState } from "react"
+
+// Register plugins if required
+// MdEditor.use(YOUR_PLUGINS_HERE)
+
+// Initialize a markdown parser
+const mdParser = new MarkdownIt({
+  html: true,
+  linkify: true,
+  typographer: true,
+  // highlight: function (str, lang) {
+  //   if (lang && hljs.getLanguage(lang)) {
+  //     try {
+  //       return hljs.highlight(lang, str).value
+  //     } catch (__) {}
+  //   }
+  // }
+})
+
+function handleEditorChange(value, setText) {
+  // console.log('handleEditorChange', value['text'])
+  setText(value['text'])
+}
 export const EditSection = () => {
+  const [text, setText] = useState("")
   const router = useRouter()
   const sectionId = useParam("sectionId", "number")
   const [section, { setQueryData }] = useQuery(
@@ -26,8 +54,21 @@ export const EditSection = () => {
 
       <div>
         <h1>Edit Section {section.id}</h1>
-        <pre>{JSON.stringify(section, null, 2)}</pre>
-
+        <pre>JSON:{JSON.stringify(section, null, 2)}</pre>
+        <MdEditor
+        name="content"
+        defaultValue={section.content}
+        config={{
+              view: {
+                menu: true,
+                md: true,
+                html: true
+              },
+              imageUrl: 'https://octodex.github.com/images/minion.png'
+            }}
+        style={{ height: "500px" }}
+        renderHTML={t => mdParser.render(t)}
+        onChange={(v) => handleEditorChange(v, setText)} />
         <SectionForm
           submitText="Update Section" // TODO use a zod schema for form validation
           //  - Tip: extract mutation's schema into a shared `validations.ts` file and
@@ -35,6 +76,7 @@ export const EditSection = () => {
           // schema={UpdateSection}
           initialValues={section}
           onSubmit={async (values) => {
+            values.content = text
             try {
               const updated = await updateSectionMutation({
                 id: section.id,

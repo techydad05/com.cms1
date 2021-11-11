@@ -48,6 +48,28 @@ const UserInfo = () => {
   }
 }
 
+const AdminLinks = () => {
+  const currentUser = useCurrentUser()
+  if (currentUser && currentUser.role === "ADMIN") {
+    return (
+      <>
+        {/* <Link href={Routes.AdminDashboardPage()}>
+          <a className="button small">
+            <strong>Admin Dashboard</strong>
+          </a>
+        </Link> */}
+        <ul>
+          <strong>Admin Links:</strong>
+          <li><Link href="/sections"><p style={{color: "#FFF", margin: "0", textAlign: "left", textDecoration: "underline", cursor: "pointer"}}>Sections</p></Link></li>
+          <li><Link href="/projects"><p style={{color: "#FFF", margin: "0", textAlign: "left", textDecoration: "underline", cursor: "pointer"}}>Projects</p></Link></li>
+        </ul>
+      </>
+    )
+  } else {
+    return null
+  }
+}
+
 export default function TopHeader(props) {
   // console.log("props", props)
 
@@ -57,30 +79,31 @@ export default function TopHeader(props) {
   const [isActive, setActive] = useState(false);
   const handleToggle = () => {
     setActive(!isActive);
-  };
+  }
 
   setTimeout(() => {
     setHidden(false)
   }, 2000);
 
+  // TODO: work on using refs if needed
   const unhideRef = useRef()
 
 
   return (
     <div className="top-header" style={{width: "100%", padding: "10px", background: "#577ae3", color: "#FFF"}}>
       {/* <h1 style={{ float: "left" }}>{props.name}</h1> */}
-      <h1 style={{float: "left"}}>CMS?</h1>
+      <div className="logo">
+        <h1 style={{float: "left"}}>CMS?</h1>
+        {/* <Image src={logo} alt="blitzjs" /> */}
+      </div>
       {/* TODO work on fixing this logic .. better shorthand */}
       <Hamburger toggled={isOpen} onToggle={() => isOpen ? setOpen(false) : setOpen() & handleToggle()} />
       <div ref={unhideRef} id="menu-container" className={`${isHidden ? 'hide' : ''}  ${isActive ? "slideout" : "slidein"}`}>
         <Suspense fallback="Loading...">
           <UserInfo />
+          <AdminLinks />
         </Suspense>
         <ul>
-          <strong>Admin:</strong>
-          <li><Link href="/sections"><p style={{color: "#FFF", margin: "0", textAlign: "left", textDecoration: "underline", cursor: "pointer"}}>Sections</p></Link></li>
-          <li><Link href="/projects"><p style={{color: "#FFF", margin: "0", textAlign: "left", textDecoration: "underline", cursor: "pointer"}}>Projects</p></Link></li>
-          <br />
           <strong>Pages:</strong>
           {props.links.map((link, i) => (
             <li key={i}>

@@ -2,16 +2,19 @@ import { Form as FinalForm } from "react-final-form"
 import { validateZodSchema } from "blitz"
 export { FORM_ERROR } from "final-form"
 export function Form({ children, submitText, schema, initialValues, onSubmit, ...props }) {
+  const customSubmit = () => {
+    console.log(initialValues)
+  }
   return (
     <FinalForm
       initialValues={initialValues}
       validate={validateZodSchema(schema)}
       onSubmit={onSubmit}
+      // onSubmit={customSubmit}
       render={({ handleSubmit, submitting, submitError }) => (
         <form onSubmit={handleSubmit} className="form" {...props}>
           {/* Form fields supplied as children are rendered here */}
           {children}
-
           {submitError && (
             <div
               role="alert"
@@ -33,6 +36,7 @@ export function Form({ children, submitText, schema, initialValues, onSubmit, ..
             .form > * + * {
               margin-top: 1rem;
             }
+
           `}</style>
         </form>
       )}
