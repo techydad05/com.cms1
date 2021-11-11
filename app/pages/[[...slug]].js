@@ -45,8 +45,6 @@ const Home = (props) => {
   })
   const section = sections.find((s) => s.link === route[0])
 
-
-
   return (
     <div className="container">
       <TopHeader links={links} />
