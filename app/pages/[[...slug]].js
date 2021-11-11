@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 import { Image, Link, useMutation, Routes, useParams, useQuery } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import TopHeader from "app/core/components/TopHeader"
+// import TopHeader from "app/core/components/TopHeader"
 import db from "db"
 import getProject from "app/projects/queries/getProject"
 import getSection from "app/sections/queries/getSection"
@@ -47,7 +47,7 @@ const Home = (props) => {
 
   return (
     <div className="container">
-      <TopHeader links={links} />
+      {/* <TopHeader links={links} /> */}
       <main>
         <Suspense fallback={<div>Loading...</div>}>
           {/* <Project /> */}
