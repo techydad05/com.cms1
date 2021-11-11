@@ -34,7 +34,7 @@ function Section() {
   </>
 }
 
-const Home = (props) => {
+const HomeTest = (props) => {
   const params = useParams()
   const route = params.slug || ["home"]
   const sections = props.sections
@@ -201,8 +201,8 @@ const Home = (props) => {
   )
 }
 
-Home.suppressFirstRenderFlicker = true
+HomeTest.suppressFirstRenderFlicker = true
 
-Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
+HomeTest.getLayout = (page) => <Layout title="HomeTest">{page}</Layout>
 
-export default Home
+export default HomeTest
