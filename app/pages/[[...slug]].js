@@ -51,7 +51,7 @@ const Home = (props) => {
       <main>
         <Suspense fallback={<div>Loading...</div>}>
           {/* <Project /> */}
-          <Section />
+          {/* <Section /> */}
         </Suspense>
       </main>
 
