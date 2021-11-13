@@ -35,7 +35,7 @@ function Section() {
 }
 
 
-const Index = (props) => {
+const Home = (props) => {
   const params = useParams()
   const route = params.slug || ["home"]
   const sections = props.sections
@@ -202,8 +202,8 @@ const Index = (props) => {
   )
 }
 
-Index.suppressFirstRenderFlicker = true
+Home.suppressFirstRenderFlicker = true
 
-Index.getLayout = (page) => <Layout title="Index">{page}</Layout>
+Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
 
-export default Index
+export default Home
